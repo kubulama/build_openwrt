@@ -54,7 +54,7 @@ for dir in scripts resources run profiles; do mkdir -p /etc/sing-box/${dir}; don
 [ -f "/etc/sing-box/config.json" ] && rm -f /etc/sing-box/config.json
 
 # --- 准备文件 ---
-echo -e "\033[1;34m::\033[0m Installing sing-box scripts:"
+echo -e "\033[1;34m::\033[0m Installing sing-box scripts"
 echo -n '(1/6) /etc/init.d/sing-box ... '
 if curl -fkL --connect-timeout 30 -m 600 -o /etc/init.d/sing-box ${mirror}${download_dir}/${firewall}/sing-box.init > /dev/null 2>&1; then
     echo -e "\033[1;32m✔\033[0m"
