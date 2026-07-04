@@ -12,6 +12,7 @@
 # url 订阅地址
 # interval 订阅更新间隔时间，单位秒
 # additional-prefix 节点名称前缀，方便区分节点
+# proxy 更新订阅使用的出站
 proxy-providers:
   provider1:
     url: ""
@@ -198,7 +199,6 @@ rules:
   - DOMAIN-SUFFIX,xn--ngstr-lra8j.com,默认
   # 3. 域名规则
   - RULE-SET,direct_domain,直连
-  - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,private_domain,直连
   - RULE-SET,microsoft@cn_domain,直连
   - RULE-SET,apple@cn_domain,直连
@@ -210,6 +210,7 @@ rules:
   - RULE-SET,spotify_domain,Spotify
   - RULE-SET,geolocation-!cn,其他
   # 4. IP 规则
+  - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,netflix_ip,NETFLIX,no-resolve
   - RULE-SET,telegram_ip,Telegram,no-resolve
   - RULE-SET,twitter_ip,Twitter,no-resolve
