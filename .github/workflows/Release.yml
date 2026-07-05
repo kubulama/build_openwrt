@@ -111,7 +111,7 @@ jobs:
         *${{ env.BUILD_DATE }} 固件发布*
 
         更新内容
-        $(awk '/更新内容/{f=1; c=2; next} f && --c<=0' ./doc/release.md | sed 's/^-/•/g')
+        $(awk '/更新内容/{f=1; c=2; next} f && --c<=0' ./doc/release.md | awk '/^- / {sub(/^- /, ++c ". ")} 1')
 
         [固件下载地址](https://github.com/ffuqiangg/build_openwrt/releases/tag/${{ env.BUILD_DATE }}) | [刷机说明](https://github.com/ffuqiangg/build_openwrt/doc/readme.md)
         "
