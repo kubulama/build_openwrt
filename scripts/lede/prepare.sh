@@ -62,7 +62,48 @@ cd ${wrtdir}
 
 p "更新 Feeds"
 ./scripts/feeds update -f -a
-./scripts/feeds install -f -a
+p "Install selected feed packages"
+feed_packages="
+autocore-arm
+bash
+bsdtar
+cfdisk
+coremark
+curl
+dnsmasq-full
+ethtool
+htop
+iftop
+iperf3
+jq
+openssh-sftp-server
+vim-fuller
+wget-ssl
+zoneinfo-asia
+luci-nginx
+luci-compat
+luci-theme-bootstrap
+luci-theme-m3e
+luci-app-opkg
+luci-app-samba4
+luci-app-zerotier
+luci-app-socat
+luci-app-ttyd
+luci-app-diskman
+block-mount
+kmod-sched-core
+kmod-sched-bpf
+kmod-veth
+kmod-nft-tproxy
+v2ray-geoip
+v2ray-geosite
+"
+for pkg in ${feed_packages}; do
+  ./scripts/feeds install -f "${pkg}" || p "WARN: feed package not found: ${pkg}"
+done
+p "Disk and memory after selected feeds"
+df -h
+free -h
 
 
 p "应用自定义修改"
@@ -168,6 +209,13 @@ popd
 mkdir -p ./feeds/packages/utils/cgroupfs-mount/patches
 cp -f ${otherdir}/yaof/PATCH/pkgs/cgroupfs-mount/90* ./feeds/packages/utils/cgroupfs-mount/patches/
 
+p "v2ray geodata for daed"
+rm -rf ./feeds/packages/net/v2ray-geodata
+cp -rf ${otherdir}/v2ray_geodata ./package/add/v2ray-geodata
+
+p "Skip optional proxy/container packages for minimal N1 LEDE"
+if false; then
+
 p "替换 sing-box"
 rm -rf ./feeds/packages/net/sing-box
 cp -rf ${otherdir}/imm_pkg_ma/net/sing-box ./feeds/packages/net/sing-box
@@ -220,6 +268,7 @@ sed -i 's|\.\./\.\.|$(TOPDIR)/feeds/packages|g' ./package/add/netavark/Makefile
 p "Filebrowser 文件管理器"
 rm -rf ./feeds/luci/applications/luci-app-filebrowser-go ./feeds/packages/utils/filebrowser
 cp -rf ${otherdir}/openwrt-add/openwrt_pkgs/{filebrowser,luci-app-filebrowser-go} ./package/add/
+fi
 p "Samba4 网络共享"
 sed -i 's/nas/services/g' ./feeds/luci/applications/luci-app-samba4/root/usr/share/luci/menu.d/luci-app-samba4.json
 p "硬盘休眠"
