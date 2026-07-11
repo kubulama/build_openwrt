@@ -134,6 +134,7 @@ popd
 mv -f ./qiu-luci-app-daed/daed ./qiu-luci-app-daed/luci-app-daed ./package/add/
 rm -rf ./qiu-luci-app-daed
 sed -i '/DAED_USE_VMLINUX_BTF:vmlinux-btf/d' ./package/add/daed/Makefile
+sed -i '/@KERNEL_XDP_SOCKETS/s/[[:space:]]*\\$//' ./package/add/daed/Makefile
 p "启用 bash"
 sed -i 's,/bin/ash,/bin/bash,' ./package/base-files/files/{etc/passwd,usr/libexec/login.sh}
 
