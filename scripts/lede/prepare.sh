@@ -44,8 +44,8 @@ clone 25.12 ${yaof_repo} ${otherdir}/yaof &
 wait && sync
 
 p "一些调整"
-p "修改 IP ( 192.168.1.99 )"
-sed -i "/lan) ipad=\${ipaddr:-/s/\${ipaddr:-\"[^\"]*\"}/\${ipaddr:-\"192.168.1.99\"}/" ${wrtdir}/package/base-files/*/bin/config_generate
+p "修改 IP ( 192.168.2.1 )"
+sed -i "/lan) ipad=\${ipaddr:-/s/\${ipaddr:-\"[^\"]*\"}/\${ipaddr:-\"192.168.2.1\"}/" ${wrtdir}/package/base-files/*/bin/config_generate
 p "针对 N1 的编译优化"
 sed -i 's/Os/O2/g' ${wrtdir}/include/target.mk
 sed -i 's/-mcpu=cortex-a53/&+crypto+crc -fpredictive-commoning -ftree-partial-pre -floop-interchange -fschedule-insns -fsched-pressure -ftree-vectorize -fvect-cost-model=cheap -mno-outline-atomics -fweb -frename-registers -fno-plt/' ${wrtdir}/include/target.mk
@@ -67,6 +67,14 @@ p "更新 Feeds"
 
 p "应用自定义修改"
 mkdir -p ./package/add
+p "QiuSimons daed"
+rm -rf ./package/add/daed ./package/add/luci-app-daed ./qiu-luci-app-daed
+git clone --depth=1 -b kix --single-branch --filter=blob:none --sparse https://github.com/QiuSimons/luci-app-daed ./qiu-luci-app-daed
+pushd ./qiu-luci-app-daed
+git sparse-checkout set daed luci-app-daed
+popd
+mv -f ./qiu-luci-app-daed/daed ./qiu-luci-app-daed/luci-app-daed ./package/add/
+rm -rf ./qiu-luci-app-daed
 p "启用 bash"
 sed -i 's,/bin/ash,/bin/bash,' ./package/base-files/files/{etc/passwd,usr/libexec/login.sh}
 
