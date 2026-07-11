@@ -91,6 +91,23 @@ luci-app-socat
 luci-app-ttyd
 luci-app-diskman
 block-mount
+bc
+pciutils
+wsdd2
+luci-app-ksmbd
+luci-app-samba
+ddns-scripts
+ntpdate
+coreutils
+coreutils-install
+coreutils-df
+coreutils-nohup
+gperf
+libnetsnmp
+maccalc
+libtins
+libyaml-cpp
+libgpiod
 kmod-sched-core
 kmod-sched-bpf
 kmod-veth
@@ -116,6 +133,7 @@ git sparse-checkout set daed luci-app-daed
 popd
 mv -f ./qiu-luci-app-daed/daed ./qiu-luci-app-daed/luci-app-daed ./package/add/
 rm -rf ./qiu-luci-app-daed
+sed -i '/DAED_USE_VMLINUX_BTF:vmlinux-btf/d' ./package/add/daed/Makefile
 p "启用 bash"
 sed -i 's,/bin/ash,/bin/bash,' ./package/base-files/files/{etc/passwd,usr/libexec/login.sh}
 
@@ -198,6 +216,7 @@ clone packages-24.10 ${node_repo} ./feeds/packages/lang/node
 p "golang"
 rm -rf ./feeds/packages/lang/golang
 clone 26.x ${golang_repo} ./feeds/packages/lang/golang
+./scripts/feeds install -f golang
 p "Coremark"
 rm -rf ./feeds/packages/utils/coremark
 cp -rf ${otherdir}/openwrt-add/openwrt_pkgs/coremark ./feeds/packages/utils/coremark
