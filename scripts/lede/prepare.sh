@@ -77,7 +77,6 @@ iftop
 iperf3
 jq
 openssh-sftp-server
-vim-fuller
 wget-ssl
 zoneinfo-asia
 luci-nginx
