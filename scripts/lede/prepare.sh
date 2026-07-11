@@ -134,6 +134,12 @@ mv -f ./qiu-luci-app-daed/daed ./qiu-luci-app-daed/luci-app-daed ./package/add/
 rm -rf ./qiu-luci-app-daed
 sed -i '/DAED_USE_VMLINUX_BTF:vmlinux-btf/d' ./package/add/daed/Makefile
 sed -i '/@KERNEL_XDP_SOCKETS/s/[[:space:]]*\\$//' ./package/add/daed/Makefile
+p "Force kernel BTF for daed"
+cat >> ./target/linux/amlogic/config-6.6 <<'EOF'
+# CONFIG_DEBUG_INFO_NONE is not set
+CONFIG_DEBUG_INFO_DWARF4=y
+CONFIG_DEBUG_INFO_BTF=y
+EOF
 p "启用 bash"
 sed -i 's,/bin/ash,/bin/bash,' ./package/base-files/files/{etc/passwd,usr/libexec/login.sh}
 

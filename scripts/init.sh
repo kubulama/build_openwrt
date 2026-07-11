@@ -144,6 +144,10 @@ dr "echo 'runner ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/runner;"
 dr "chmod 0440 /etc/sudoers.d/runner;"
 dr "chown -R runner:runner /home/runner"
 
+p "安装 kernel BTF 生成工具"
+dr "apt-get update && apt-get install -y dwarves"
+dr "pahole --version"
+
 
 p "d 命令已可用"
 

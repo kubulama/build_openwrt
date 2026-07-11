@@ -53,6 +53,8 @@ jobs:
           cd ${wrtdir}
           cp ${ffdir}/scripts/lede/config.seed .config
           make defconfig
+          grep -E "^CONFIG_KERNEL_DEBUG_INFO_DWARF4=y" .config
+          grep -E "^CONFIG_KERNEL_DEBUG_INFO_BTF=y" .config
         '
 
     - name: 压缩编译目录
